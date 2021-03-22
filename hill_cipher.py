@@ -9,11 +9,9 @@ keyMatrix.append([int(x) for x in input("Enter the second row of the key matrix,
 
 # convert into a numpy array
 A = np.array(keyMatrix) % 27
-print(A)
 
 # find the determinant and check if it is valid
 A_det = int(np.linalg.det(A) % 27)
-print("det: ", A_det)
 if(A_det % 3 == 0 or A_det == 0):
     print("Bad key matrix! Inverse cannot be found.")
     quit()
