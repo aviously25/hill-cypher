@@ -29,6 +29,7 @@ def getMatrixString(string):
     
     return [row1, row2]
 
+# returns the matrix version of the encoded string
 def getMatrixEncoded(string):
     row1 = []
     row2 = []
@@ -43,6 +44,7 @@ def getMatrixEncoded(string):
 
     return [row1, row2]
 
+# returns the full decoded string
 def getDecodedString(decodedMatrix):
     decoded = ""
 
