@@ -2,10 +2,22 @@ import numpy as np
 import math
 from functions import *
 
+# class to print out colored text in terminal
+class colors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 # Read in the matrix
 keyMatrix = []
-keyMatrix.append([int(x) for x in input("Enter the first row of the key matrix, seperate elements by a space:\n").split()])
-keyMatrix.append([int(x) for x in input("Enter the second row of the key matrix, seperate elements by a space:\n").split()])
+keyMatrix.append([int(x) for x in input(f"{colors.OKBLUE}Enter the first row of the key matrix, seperate elements by a space:{colors.ENDC}\n").split()])
+keyMatrix.append([int(x) for x in input(f"{colors.OKBLUE}Enter the second row of the key matrix, seperate elements by a space:{colors.ENDC}\n").split()])
 
 # convert into a numpy array
 A = np.array(keyMatrix) % 27
@@ -13,12 +25,12 @@ A = np.array(keyMatrix) % 27
 # find the determinant and check if it is valid
 A_det = int(np.linalg.det(A) % 27)
 if(A_det % 3 == 0 or A_det == 0):
-    print("Bad key matrix! Inverse cannot be found.")
+    print(f"{colors.FAIL}Bad key matrix! Inverse cannot be found.{colors.ENDC}")
     quit()
 
 # encode or decode 
-if(int(input("Enter 1 to encode a string or enter 2 to decode: ")) == 1):
-    string = input("Enter String to encode: ").upper()
+if(int(input(f"\n{colors.OKBLUE}Enter 1 to encode a string or enter 2 to decode:{colors.ENDC} ")) == 1):
+    string = input(f"{colors.OKBLUE}Enter String to encode: {colors.ENDC}").upper()
     if(len(string) % 2 != 0): string += " " # cannot have odd number of letters
 
     #enocde the matrix
@@ -30,7 +42,7 @@ if(int(input("Enter 1 to encode a string or enter 2 to decode: ")) == 1):
     for i in range(len(encodedMatrix[0])):
         encodedStr += str(encodedMatrix[0][i]).zfill(2)
         encodedStr += str(encodedMatrix[1][i]).zfill(2)
-    print("Encoded message: \n", encodedStr)
+    print(f"\n{colors.OKGREEN}Encoded message: \n{colors.ENDC}", encodedStr)
 
 else:
     # find inverse of key matrix
@@ -39,11 +51,11 @@ else:
     A_inv = (multiInv * A_adj) % 27 # actual inverse matrix
 
     # get the encoded message:
-    encoded = input("Enter the encoded string: \n")
+    encoded = input(f"{colors.OKBLUE}Enter the encoded string: {colors.ENDC}\n")
     encodedMatrix = np.array(getMatrixEncoded(encoded))
 
     # decode the message:
     decodedMatrix = np.matmul(A_inv, encodedMatrix) % 27
     decoded = getDecodedString(decodedMatrix)
 
-    print("Decoded message: \n", decoded)
+    print(f"\n{colors.OKGREEN}Decoded message: \n{colors.ENDC}", decoded)
